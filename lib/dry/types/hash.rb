@@ -50,6 +50,10 @@ module Dry
         schema(type_map, Symbolized)
       end
 
+      def strict_with_defaults_symbolized(type_map)
+        schema(type_map, StrictWithDefaultsSymbolized)
+      end
+
       private
 
       # @param [Hash] _result

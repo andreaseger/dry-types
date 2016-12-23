@@ -223,6 +223,24 @@ module Dry
         end
       end
 
+      # {StrictSymbolized} hash will turn string key names into symbols
+      # {StrictSymbolized} has same behavior as {StrictWithDefaults} after that
+      class StrictWithDefaultsSymbolized < StrictWithDefaults
+        private
+
+        def resolve(hash)
+          member_types.each_key do |key|
+            if hash.key?(key)
+              hash[key] = hash.delete(key)
+            elsif hash.key?(string_key = key.to_s)
+              hash[key] = hash.delete(string_key)
+            end
+          end
+          super(hash)
+        end
+      end
+
+
       private_constant(*constants(false))
     end
   end
